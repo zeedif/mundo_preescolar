@@ -4,16 +4,70 @@ import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 class Letra3 extends StatefulWidget {
-  const Letra3({Key? key}) : super(key: key);
+  const Letra3({super.key});
 
   @override
   State<Letra3> createState() => _Letra3State();
 }
 
 class _Letra3State extends State<Letra3> {
-  var play = AudioCache();
-  List<String> contenido = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  List<String> sonidos = ["sounds/a.mp3","sounds/b.mp3","sounds/c.mp3","sounds/d.mp3","sounds/e.mp3","sounds/f.mp3","sounds/g.mp3","sounds/h.mp3","sounds/i.mp3","sounds/j.mp3","sounds/k.mp3","sounds/l.mp3","sounds/m.mp3","sounds/n.mp3","sounds/o.mp3","sounds/p.mp3","sounds/q.mp3","sounds/r.mp3","sounds/s.mp3","sounds/t.mp3","sounds/u.mp3","sounds/v.mp3","sounds/w.mp3","sounds/x.mp3","sounds/y.mp3","sounds/z.mp3"];
+  var player = AudioPlayer();
+  List<String> contenido = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ];
+  List<String> sonidos = [
+    "sounds/a.mp3",
+    "sounds/b.mp3",
+    "sounds/c.mp3",
+    "sounds/d.mp3",
+    "sounds/e.mp3",
+    "sounds/f.mp3",
+    "sounds/g.mp3",
+    "sounds/h.mp3",
+    "sounds/i.mp3",
+    "sounds/j.mp3",
+    "sounds/k.mp3",
+    "sounds/l.mp3",
+    "sounds/m.mp3",
+    "sounds/n.mp3",
+    "sounds/o.mp3",
+    "sounds/p.mp3",
+    "sounds/q.mp3",
+    "sounds/r.mp3",
+    "sounds/s.mp3",
+    "sounds/t.mp3",
+    "sounds/u.mp3",
+    "sounds/v.mp3",
+    "sounds/w.mp3",
+    "sounds/x.mp3",
+    "sounds/y.mp3",
+    "sounds/z.mp3"
+  ];
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -59,7 +113,7 @@ class _Letra3State extends State<Letra3> {
             (index) {
               return GestureDetector(
                 onTap: () {
-                  play.play(sonidos[index]);
+                  player.play(AssetSource(sonidos[index]));
                 },
                 child: Container(
                   color: Colors.purple[400],
@@ -67,7 +121,7 @@ class _Letra3State extends State<Letra3> {
                   child: Center(
                     child: Text(
                       contenido[index],
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                       textAlign: TextAlign.center,
                     ),
                   ),

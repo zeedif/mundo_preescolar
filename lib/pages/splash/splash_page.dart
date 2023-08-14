@@ -3,7 +3,7 @@ import 'package:mundo_preescolar/pages/splash/splash_controller.dart';
 import 'package:mundo_preescolar/routes/arguments.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -20,7 +20,9 @@ class _SplashPageState extends State<SplashPage> {
     });
     _controller.addListener(() async {
       if (_controller.routeName != null) {
-        Navigator.pushReplacementNamed(context, _controller.routeName!,arguments: ScreenArguments(usuario: await _controller.obtenerUsuario()));
+        Navigator.pushReplacementNamed(context, _controller.routeName!,
+            arguments:
+                ScreenArguments(usuario: await _controller.obtenerUsuario()));
       }
     });
   }

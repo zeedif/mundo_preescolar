@@ -5,7 +5,7 @@ import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 class SelectPage extends StatefulWidget {
-  const SelectPage({Key? key}) : super(key: key);
+  const SelectPage({super.key});
 
   @override
   State<SelectPage> createState() => _SelectPageState();
@@ -16,47 +16,47 @@ class _SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-    void _irAlNivel(Usuario user, int? i, int j) {
-      if(i == 1){
-        if(j == 1) {
+    void irAlNivel(Usuario user, int? i, int j) {
+      if (i == 1) {
+        if (j == 1) {
           Navigator.pushReplacementNamed(context, Rutas.JugarNum1,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
-        if(j == 2) {
+        if (j == 2) {
           Navigator.pushReplacementNamed(context, Rutas.JugarNum2,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
-        if(j == 3) {
+        if (j == 3) {
           Navigator.pushReplacementNamed(context, Rutas.JugarNum3,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
       }
-      if(i == 2){
-        if(j == 1) {
+      if (i == 2) {
+        if (j == 1) {
           Navigator.pushReplacementNamed(context, Rutas.JugarLet1,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
-        if(j == 2) {
+        if (j == 2) {
           Navigator.pushReplacementNamed(context, Rutas.JugarLet2,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
-        if(j == 3) {
+        if (j == 3) {
           Navigator.pushReplacementNamed(context, Rutas.JugarLet3,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
       }
-      if(i == 3){
-        if(j == 1) {
+      if (i == 3) {
+        if (j == 1) {
           Navigator.pushReplacementNamed(context, Rutas.JugarCol1,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
-        if(j == 2) {
+        if (j == 2) {
           Navigator.pushReplacementNamed(context, Rutas.JugarCol2,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
-        if(j == 3) {
+        if (j == 3) {
           Navigator.pushReplacementNamed(context, Rutas.JugarCol3,
-            arguments: ScreenArguments(usuario: user));
+              arguments: ScreenArguments(usuario: user));
         }
       }
     }
@@ -98,7 +98,10 @@ class _SelectPageState extends State<SelectPage> {
               arguments: ScreenArguments(usuario: args.usuario));
         },
         backgroundColor: tema,
-        label: const Text("Volver", style: TextStyle(fontSize: 20),),
+        label: const Text(
+          "Volver",
+          style: TextStyle(fontSize: 20),
+        ),
         icon: const Icon(Icons.keyboard_return, size: 20),
       ),
       body: Container(
@@ -132,7 +135,7 @@ class _SelectPageState extends State<SelectPage> {
                   padding: const EdgeInsets.all(15),
                   iconSize: 180,
                   onPressed: () {
-                    _irAlNivel(args.usuario, args.i, 1);
+                    irAlNivel(args.usuario, args.i, 1);
                   },
                 ),
                 IconButton(
@@ -140,7 +143,7 @@ class _SelectPageState extends State<SelectPage> {
                   padding: const EdgeInsets.all(15),
                   iconSize: 180,
                   onPressed: () {
-                    _irAlNivel(args.usuario, args.i, 2);
+                    irAlNivel(args.usuario, args.i, 2);
                   },
                 ),
                 IconButton(
@@ -148,7 +151,7 @@ class _SelectPageState extends State<SelectPage> {
                   padding: const EdgeInsets.all(15),
                   iconSize: 180,
                   onPressed: () {
-                    _irAlNivel(args.usuario, args.i, 3);
+                    irAlNivel(args.usuario, args.i, 3);
                   },
                 ),
               ],

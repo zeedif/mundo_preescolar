@@ -5,7 +5,7 @@ import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 class Color1 extends StatefulWidget {
-  const Color1({Key? key}) : super(key: key);
+  const Color1({super.key});
 
   @override
   State<Color1> createState() => _Color1State();
@@ -89,10 +89,11 @@ class _Color1State extends State<Color1> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: choises.keys.map((element) {
                 return Draggable<String>(
-                    data: element,
-                    child: Movable(emoji: score[element]== true ? '✔️' : element),
-                    feedback: Movable(emoji: element),
-                    childWhenDragging: const Movable(emoji: ''),
+                  data: element,
+                  feedback: Movable(emoji: element),
+                  childWhenDragging: const Movable(emoji: ''),
+                  child:
+                      Movable(emoji: score[element] == true ? '✔️' : element),
                 );
               }).toList(),
             ),
@@ -116,10 +117,13 @@ class _Color1State extends State<Color1> {
         if (score[emoji] == true) {
           return Container(
             color: choises[emoji]!.withOpacity(0.3),
-            child: Text("¡Correcto!",style: Theme.of(context).textTheme.headline4,),
             alignment: Alignment.center,
             height: 80,
             width: 200,
+            child: Text(
+              "¡Correcto!",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           );
         } else {
           return Container(
@@ -152,10 +156,7 @@ class Movable extends StatelessWidget {
         alignment: Alignment.center,
         height: 81,
         padding: const EdgeInsets.all(10),
-        child: Text(
-          emoji,
-          style: Theme.of(context).textTheme.headline3
-        ),
+        child: Text(emoji, style: Theme.of(context).textTheme.displaySmall),
       ),
     );
   }

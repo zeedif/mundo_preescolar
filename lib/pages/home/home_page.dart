@@ -6,7 +6,7 @@ import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -76,8 +76,14 @@ class _HomePageState extends State<HomePage> {
           );
         },
         backgroundColor: Colors.red,
-        label: const Text("Eliminar", style: TextStyle(fontSize: 20),),
-        icon: const Icon(Icons.delete, size: 20,),
+        label: const Text(
+          "Eliminar",
+          style: TextStyle(fontSize: 20),
+        ),
+        icon: const Icon(
+          Icons.delete,
+          size: 20,
+        ),
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),

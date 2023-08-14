@@ -3,17 +3,11 @@ import 'package:mundo_preescolar/routes/pages.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 void main() {
-  /*
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft,
-  ]);
-  */
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -24,22 +18,29 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // This is the theme of your application.
         //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a blue toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
         // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.teal,
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         textTheme: const TextTheme(
-          headline1: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
-          headline2: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
-          headline3: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
-          headline4: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
-          headline5: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
-          headline6: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+          displayLarge: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+          displayMedium: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+          displaySmall: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+          headlineMedium: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+          headlineSmall: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
+          titleLarge: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
         ),
+        useMaterial3: true,
       ),
       initialRoute: Rutas.SPLASH,
       routes: appRutas(),

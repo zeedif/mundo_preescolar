@@ -5,7 +5,7 @@ import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 class Numero1 extends StatefulWidget {
-  const Numero1({Key? key}) : super(key: key);
+  const Numero1({super.key});
 
   @override
   State<Numero1> createState() => _Numero1State();
@@ -92,10 +92,11 @@ class _Numero1State extends State<Numero1> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: choises.keys.map((element) {
                 return Draggable<String>(
-                    data: element,
-                    child: Movable(emoji: score[element]== true ? '✔️' : element),
-                    feedback: Movable(emoji: element),
-                    childWhenDragging: const Movable(emoji: ''),
+                  data: element,
+                  feedback: Movable(emoji: element),
+                  childWhenDragging: const Movable(emoji: ''),
+                  child:
+                      Movable(emoji: score[element] == true ? '✔️' : element),
                 );
               }).toList(),
             ),
@@ -119,18 +120,24 @@ class _Numero1State extends State<Numero1> {
         if (score[emoji] == true) {
           return Container(
             color: Colors.blue.shade300.withOpacity(0.3),
-            child: Text("¡Correcto!",style: Theme.of(context).textTheme.headline4,),
             alignment: Alignment.center,
             height: 80,
             width: 200,
+            child: Text(
+              "¡Correcto!",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           );
         } else {
           return Container(
             color: Colors.blue.shade300,
-            child: Text(choises[emoji].toString(),style: Theme.of(context).textTheme.headline4,),
             alignment: Alignment.center,
             height: 80,
             width: 200,
+            child: Text(
+              choises[emoji].toString(),
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           );
         }
       },
@@ -157,10 +164,7 @@ class Movable extends StatelessWidget {
         alignment: Alignment.center,
         height: 81,
         padding: const EdgeInsets.all(10),
-        child: Text(
-          emoji,
-          style: Theme.of(context).textTheme.headline3
-        ),
+        child: Text(emoji, style: Theme.of(context).textTheme.displaySmall),
       ),
     );
   }

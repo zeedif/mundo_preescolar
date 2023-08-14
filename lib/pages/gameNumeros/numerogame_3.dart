@@ -4,16 +4,27 @@ import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 class Numero3 extends StatefulWidget {
-  const Numero3({Key? key}) : super(key: key);
+  const Numero3({super.key});
 
   @override
   State<Numero3> createState() => _Numero3State();
 }
 
 class _Numero3State extends State<Numero3> {
-  var play = AudioCache();
+  var player = AudioPlayer();
   List<String> contenido = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  List<String> sonidos = ["sounds/0.mp3", "sounds/1.mp3", "sounds/2.mp3", "sounds/3.mp3", "sounds/4.mp3", "sounds/5.mp3", "sounds/6.mp3", "sounds/7.mp3", "sounds/8.mp3", "sounds/9.mp3"];
+  List<String> sonidos = [
+    "sounds/0.mp3",
+    "sounds/1.mp3",
+    "sounds/2.mp3",
+    "sounds/3.mp3",
+    "sounds/4.mp3",
+    "sounds/5.mp3",
+    "sounds/6.mp3",
+    "sounds/7.mp3",
+    "sounds/8.mp3",
+    "sounds/9.mp3"
+  ];
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -59,7 +70,7 @@ class _Numero3State extends State<Numero3> {
             (index) {
               return GestureDetector(
                 onTap: () {
-                  play.play(sonidos[index]);
+                  player.play(AssetSource(sonidos[index]));
                 },
                 child: Container(
                   color: Colors.blue[400],
@@ -67,7 +78,7 @@ class _Numero3State extends State<Numero3> {
                   child: Center(
                     child: Text(
                       contenido[index],
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                       textAlign: TextAlign.center,
                     ),
                   ),
