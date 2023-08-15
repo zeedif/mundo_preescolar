@@ -15,7 +15,7 @@ import 'package:mundo_preescolar/pages/home/home_page.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
 Map<String, Widget Function(BuildContext)> appRutas() {
-  return{
+  return {
     Rutas.SPLASH: (_) => const SplashPage(),
     Rutas.HOME: (_) => const HomePage(),
     Rutas.REGISTER: (_) => const RegisterPage(),

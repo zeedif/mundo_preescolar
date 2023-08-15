@@ -1,0 +1,4 @@
+*.cc eol=lf
+*.cmake eol=lf
+*.h eol=lf
+*.swift eol=lf

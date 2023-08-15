@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_meedu/ui.dart';
 import 'package:mundo_preescolar/routes/pages.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
 
@@ -40,10 +41,14 @@ class MyApp extends StatelessWidget {
           headlineSmall: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
           titleLarge: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
         ),
-        useMaterial3: true,
+        // useMaterial3: true,
       ),
       initialRoute: Rutas.SPLASH,
       routes: appRutas(),
+      navigatorObservers: [
+        router.observer,
+      ],
+      navigatorKey: router.navigatorKey,
     );
   }
 }
