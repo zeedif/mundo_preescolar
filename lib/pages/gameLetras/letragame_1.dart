@@ -42,6 +42,7 @@ class _Letra1State extends State<Letra1> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton.extended(
+            heroTag: "reiniciarButton",
             onPressed: () {
               setState(() {
                 score.clear();
@@ -57,6 +58,7 @@ class _Letra1State extends State<Letra1> {
           ),
           const SizedBox(height: 10),
           FloatingActionButton.extended(
+            heroTag: "volverButton",
             onPressed: () {
               Navigator.pushReplacementNamed(context, Rutas.HOME,
                   arguments: ScreenArguments(usuario: args.usuario));
@@ -136,8 +138,8 @@ class _Letra1State extends State<Letra1> {
           );
         }
       },
-      onWillAccept: (data) => data == emoji,
-      onAccept: (data) {
+      onWillAcceptWithDetails: (data) => data == emoji,
+      onAcceptWithDetails: (data) {
         setState(() {
           score[emoji] = true;
         });
@@ -148,7 +150,7 @@ class _Letra1State extends State<Letra1> {
 }
 
 class Movable extends StatelessWidget {
-  const Movable({Key? key, required this.emoji}) : super(key: key);
+  const Movable({super.key, required this.emoji});
   final String emoji;
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/ui.dart';
 import 'package:mundo_preescolar/db/user.dart';
 import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
@@ -13,7 +14,7 @@ class SelectController extends SimpleNotifier {
   //   return width;
   // }
 
-  void irAlNivel(BuildContext context, Usuario user, int i, int j) {
+  void navegarANivel(BuildContext context, Usuario user, int i, int j) {
     String ruta = '';
     switch (i) {
       // Nivel de numeros
@@ -41,7 +42,7 @@ class SelectController extends SimpleNotifier {
                 : Rutas.JugarCol3;
         break;
     }
-    Navigator.pushReplacementNamed(context, ruta,
+    router.pushReplacementNamed(ruta,
         arguments: ScreenArguments(usuario: user));
   }
 

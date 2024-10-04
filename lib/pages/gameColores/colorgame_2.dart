@@ -10,7 +10,7 @@ int level = 6;
 
 class Color2 extends StatefulWidget {
   final int size;
-  const Color2({Key? key, this.size = 6}) : super(key: key);
+  const Color2({super.key, this.size = 6});
 
   @override
   State<Color2> createState() => _Color2State();

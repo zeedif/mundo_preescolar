@@ -19,7 +19,8 @@ class LevelButton extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       iconSize: selectProvider.read.getButtonSize(context),
       onPressed: () {
-        selectProvider.read.irAlNivel(context, args.usuario, args.i!, level);
+        selectProvider.read
+            .navegarANivel(context, args.usuario, args.i!, level);
       },
     );
   }

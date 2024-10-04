@@ -10,7 +10,7 @@ int level = 6;
 
 class Numero2 extends StatefulWidget {
   final int size;
-  const Numero2({Key? key, this.size = 6}) : super(key: key);
+  const Numero2({super.key, this.size = 6});
 
   @override
   State<Numero2> createState() => _Numero2State();

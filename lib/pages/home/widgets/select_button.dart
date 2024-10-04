@@ -21,7 +21,7 @@ class SelectButton extends StatelessWidget {
     final controller = homeProvider.read;
     return MaterialButton(
       onPressed: () {
-        controller.navegarASelect(args.usuario, 2);
+        controller.navegarASelect(args.usuario, index);
       },
       color: color,
       height: 60,
