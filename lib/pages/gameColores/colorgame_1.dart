@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
+import 'package:mundo_preescolar/utils/autoscroll.dart';
 
 class Color1 extends StatefulWidget {
   const Color1({super.key});
@@ -23,6 +23,14 @@ class _Color1State extends State<Color1> {
     '🥥': Colors.brown,
   };
   int index = 0;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -62,8 +70,11 @@ class _Color1State extends State<Color1> {
           FloatingActionButton.extended(
             heroTag: "volverButton",
             onPressed: () {
-              Navigator.pushReplacementNamed(context, Rutas.HOME,
-                  arguments: ScreenArguments(usuario: args.usuario));
+              Navigator.pushReplacementNamed(
+                context,
+                Rutas.HOME,
+                arguments: ScreenArguments(usuario: args.usuario),
+              );
             },
             backgroundColor: Colors.green,
             label: const Text(
@@ -83,65 +94,83 @@ class _Color1State extends State<Color1> {
             alignment: Alignment.center,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: choises.keys.map((element) {
-                return Draggable<String>(
-                  data: element,
-                  feedback: Movable(emoji: element),
-                  childWhenDragging: const Movable(emoji: ''),
-                  child:
-                      Movable(emoji: score[element] == true ? '✔️' : element),
-                );
-              }).toList(),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: choises.keys.map((element) {
-                return buildTarget(element);
-              }).toList()
-                ..shuffle(Random(index)),
-            ),
-          ],
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Columna de elementos para arrastrar
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: choises.keys.map((element) {
+                  return Draggable<String>(
+                    data: element,
+                    feedback: Movable(emoji: element),
+                    childWhenDragging: const Movable(emoji: ''),
+                    child: Movable(
+                      emoji: score[element] == true ? '✔️' : element,
+                    ),
+                    onDragUpdate: (details) {
+                      autoScroll(
+                        scrollController: _scrollController,
+                        globalPosition: details.globalPosition,
+                        screenSize: MediaQuery.of(context).size,
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              // Columna de destinos de arrastre
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: choises.keys.map((element) {
+                  return buildTarget(element);
+                }).toList()
+                  ..shuffle(Random(index)),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildTarget(emoji) {
-    return DragTarget<String>(
-      builder: (context, candidateData, rejectedData) {
-        if (score[emoji] == true) {
-          return Container(
-            color: choises[emoji]!.withOpacity(0.3),
-            alignment: Alignment.center,
-            height: 80,
-            width: 200,
-            child: Text(
-              "¡Correcto!",
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          );
-        } else {
-          return Container(
-            color: choises[emoji],
-            height: 80,
-            width: 200,
-          );
-        }
-      },
-      onWillAcceptWithDetails: (data) => data == emoji,
-      onAcceptWithDetails: (data) {
-        setState(() {
-          score[emoji] = true;
-        });
-      },
-      onLeave: (data) {},
+  Widget buildTarget(String emoji) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 2.0),
+      child: DragTarget<String>(
+        builder: (context, candidateData, rejectedData) {
+          if (score[emoji] == true) {
+            return Container(
+              color: choises[emoji]!.withOpacity(0.3),
+              alignment: Alignment.center,
+              height: 80,
+              width: 200,
+              child: Text(
+                "¡Correcto!",
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            );
+          } else {
+            return Container(
+              color: choises[emoji],
+              height: 80,
+              width: 200,
+            );
+          }
+        },
+        onWillAccept: (data) => data == emoji,
+        onAccept: (data) {
+          setState(() {
+            score[emoji] = true;
+          });
+        },
+        onLeave: (data) {},
+      ),
     );
   }
 }

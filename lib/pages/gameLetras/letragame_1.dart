@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mundo_preescolar/routes/arguments.dart';
 import 'package:mundo_preescolar/routes/routes.dart';
+import 'package:mundo_preescolar/utils/autoscroll.dart';
 
 class Letra1 extends StatefulWidget {
   const Letra1({super.key});
@@ -21,6 +21,14 @@ class _Letra1State extends State<Letra1> {
     'U': "U",
   };
   int index = 0;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -60,8 +68,11 @@ class _Letra1State extends State<Letra1> {
           FloatingActionButton.extended(
             heroTag: "volverButton",
             onPressed: () {
-              Navigator.pushReplacementNamed(context, Rutas.HOME,
-                  arguments: ScreenArguments(usuario: args.usuario));
+              Navigator.pushReplacementNamed(
+                context,
+                Rutas.HOME,
+                arguments: ScreenArguments(usuario: args.usuario),
+              );
             },
             backgroundColor: Colors.green,
             label: const Text(
@@ -81,70 +92,88 @@ class _Letra1State extends State<Letra1> {
             alignment: Alignment.center,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: choises.keys.map((element) {
-                return Draggable<String>(
-                  data: element,
-                  feedback: Movable(emoji: element),
-                  childWhenDragging: const Movable(emoji: ''),
-                  child:
-                      Movable(emoji: score[element] == true ? '✔️' : element),
-                );
-              }).toList(),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: choises.keys.map((element) {
-                return buildTarget(element);
-              }).toList()
-                ..shuffle(Random(index)),
-            ),
-          ],
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Columna de elementos para arrastrar
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: choises.keys.map((element) {
+                  return Draggable<String>(
+                    data: element,
+                    feedback: Movable(emoji: element),
+                    childWhenDragging: const Movable(emoji: ''),
+                    child: Movable(
+                      emoji: score[element] == true ? '✔️' : element,
+                    ),
+                    onDragUpdate: (details) {
+                      autoScroll(
+                        scrollController: _scrollController,
+                        globalPosition: details.globalPosition,
+                        screenSize: MediaQuery.of(context).size,
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              // Columna de destinos de arrastre
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: choises.keys.map((element) {
+                  return buildTarget(element);
+                }).toList()
+                  ..shuffle(Random(index)),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget buildTarget(String emoji) {
-    return DragTarget<String>(
-      builder: (context, candidateData, rejectedData) {
-        if (score[emoji] == true) {
-          return Container(
-            color: Colors.purple.shade300.withOpacity(0.3),
-            alignment: Alignment.center,
-            height: 80,
-            width: 200,
-            child: Text(
-              "¡Correcto!",
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          );
-        } else {
-          return Container(
-            color: Colors.purple.shade300,
-            alignment: Alignment.center,
-            height: 80,
-            width: 200,
-            child: Text(
-              choises[emoji].toString(),
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          );
-        }
-      },
-      onWillAcceptWithDetails: (data) => data == emoji,
-      onAcceptWithDetails: (data) {
-        setState(() {
-          score[emoji] = true;
-        });
-      },
-      onLeave: (data) {},
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 2.0),
+      child: DragTarget<String>(
+        builder: (context, candidateData, rejectedData) {
+          if (score[emoji] == true) {
+            return Container(
+              color: Colors.purple.shade300.withOpacity(0.3),
+              alignment: Alignment.center,
+              height: 80,
+              width: 200,
+              child: Text(
+                "¡Correcto!",
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            );
+          } else {
+            return Container(
+              color: Colors.purple.shade300,
+              alignment: Alignment.center,
+              height: 80,
+              width: 200,
+              child: Text(
+                choises[emoji].toString(),
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            );
+          }
+        },
+        onWillAccept: (data) => data == emoji,
+        onAccept: (data) {
+          setState(() {
+            score[emoji] = true;
+          });
+        },
+        onLeave: (data) {},
+      ),
     );
   }
 }
